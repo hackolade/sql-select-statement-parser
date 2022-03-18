@@ -38,7 +38,7 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitSelectAlias(ctx) {
-        ctx.alias = (ctx.identifier() || ctx.textStringLiteral()).getText();
+        ctx.alias = removeQuotes((ctx.identifier() || ctx.textStringLiteral()).getText());
     }
 
     exitTableWild(ctx) {
@@ -109,7 +109,7 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitTableAlias(ctx) {
-        ctx.alias = ctx.identifier().getText();
+        ctx.alias = removeQuotes(ctx.identifier().getText());
     }
 
 };
