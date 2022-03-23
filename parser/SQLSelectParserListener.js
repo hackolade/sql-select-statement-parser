@@ -679,84 +679,21 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#exprOr.
-	enterExprOr(ctx) {
+	// Enter a parse tree produced by SQLSelectParser#expr.
+	enterExpr(ctx) {
 	}
 
-	// Exit a parse tree produced by SQLSelectParser#exprOr.
-	exitExprOr(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#exprNot.
-	enterExprNot(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#exprNot.
-	exitExprNot(ctx) {
+	// Exit a parse tree produced by SQLSelectParser#expr.
+	exitExpr(ctx) {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#exprIs.
-	enterExprIs(ctx) {
+	// Enter a parse tree produced by SQLSelectParser#boolPri.
+	enterBoolPri(ctx) {
 	}
 
-	// Exit a parse tree produced by SQLSelectParser#exprIs.
-	exitExprIs(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#exprAnd.
-	enterExprAnd(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#exprAnd.
-	exitExprAnd(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#exprXor.
-	enterExprXor(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#exprXor.
-	exitExprXor(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#primaryExprPredicate.
-	enterPrimaryExprPredicate(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#primaryExprPredicate.
-	exitPrimaryExprPredicate(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#primaryExprCompare.
-	enterPrimaryExprCompare(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#primaryExprCompare.
-	exitPrimaryExprCompare(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#primaryExprAllAny.
-	enterPrimaryExprAllAny(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#primaryExprAllAny.
-	exitPrimaryExprAllAny(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#primaryExprIsNull.
-	enterPrimaryExprIsNull(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#primaryExprIsNull.
-	exitPrimaryExprIsNull(ctx) {
+	// Exit a parse tree produced by SQLSelectParser#boolPri.
+	exitBoolPri(ctx) {
 	}
 
 
@@ -778,39 +715,12 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#predicateExprIn.
-	enterPredicateExprIn(ctx) {
+	// Enter a parse tree produced by SQLSelectParser#predicateOperations.
+	enterPredicateOperations(ctx) {
 	}
 
-	// Exit a parse tree produced by SQLSelectParser#predicateExprIn.
-	exitPredicateExprIn(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#predicateExprBetween.
-	enterPredicateExprBetween(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#predicateExprBetween.
-	exitPredicateExprBetween(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#predicateExprLike.
-	enterPredicateExprLike(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#predicateExprLike.
-	exitPredicateExprLike(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#predicateExprRegex.
-	enterPredicateExprRegex(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#predicateExprRegex.
-	exitPredicateExprRegex(ctx) {
+	// Exit a parse tree produced by SQLSelectParser#predicateOperations.
+	exitPredicateOperations(ctx) {
 	}
 
 
@@ -823,228 +733,12 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#simpleExprConvert.
-	enterSimpleExprConvert(ctx) {
+	// Enter a parse tree produced by SQLSelectParser#simpleExpr.
+	enterSimpleExpr(ctx) {
 	}
 
-	// Exit a parse tree produced by SQLSelectParser#simpleExprConvert.
-	exitSimpleExprConvert(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprVariable.
-	enterSimpleExprVariable(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprVariable.
-	exitSimpleExprVariable(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprCast.
-	enterSimpleExprCast(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprCast.
-	exitSimpleExprCast(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprUnary.
-	enterSimpleExprUnary(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprUnary.
-	exitSimpleExprUnary(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprOdbc.
-	enterSimpleExprOdbc(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprOdbc.
-	exitSimpleExprOdbc(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprRuntimeFunction.
-	enterSimpleExprRuntimeFunction(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprRuntimeFunction.
-	exitSimpleExprRuntimeFunction(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprFunction.
-	enterSimpleExprFunction(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprFunction.
-	exitSimpleExprFunction(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprCollate.
-	enterSimpleExprCollate(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprCollate.
-	exitSimpleExprCollate(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprMatch.
-	enterSimpleExprMatch(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprMatch.
-	exitSimpleExprMatch(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprWindowingFunction.
-	enterSimpleExprWindowingFunction(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprWindowingFunction.
-	exitSimpleExprWindowingFunction(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprBinary.
-	enterSimpleExprBinary(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprBinary.
-	exitSimpleExprBinary(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprColumnRef.
-	enterSimpleExprColumnRef(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprColumnRef.
-	exitSimpleExprColumnRef(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprParamMarker.
-	enterSimpleExprParamMarker(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprParamMarker.
-	exitSimpleExprParamMarker(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprSum.
-	enterSimpleExprSum(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprSum.
-	exitSimpleExprSum(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprConvertUsing.
-	enterSimpleExprConvertUsing(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprConvertUsing.
-	exitSimpleExprConvertUsing(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprSubQuery.
-	enterSimpleExprSubQuery(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprSubQuery.
-	exitSimpleExprSubQuery(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprGroupingOperation.
-	enterSimpleExprGroupingOperation(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprGroupingOperation.
-	exitSimpleExprGroupingOperation(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprNot.
-	enterSimpleExprNot(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprNot.
-	exitSimpleExprNot(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprValues.
-	enterSimpleExprValues(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprValues.
-	exitSimpleExprValues(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprDefault.
-	enterSimpleExprDefault(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprDefault.
-	exitSimpleExprDefault(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprList.
-	enterSimpleExprList(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprList.
-	exitSimpleExprList(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprInterval.
-	enterSimpleExprInterval(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprInterval.
-	exitSimpleExprInterval(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprCase.
-	enterSimpleExprCase(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprCase.
-	exitSimpleExprCase(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprConcat.
-	enterSimpleExprConcat(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprConcat.
-	exitSimpleExprConcat(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#simpleExprLiteral.
-	enterSimpleExprLiteral(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#simpleExprLiteral.
-	exitSimpleExprLiteral(ctx) {
+	// Exit a parse tree produced by SQLSelectParser#simpleExpr.
+	exitSimpleExpr(ctx) {
 	}
 
 
@@ -1860,5 +1554,4 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 
 
 }
-
 module.exports = SQLSelectParserListener;

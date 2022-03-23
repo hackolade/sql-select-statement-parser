@@ -1,6 +1,15 @@
 const SQLSelectParserListener = require('./parser/SQLSelectParserListener');
 
 class Listener extends SQLSelectParserListener {
+    constructor() {
+        super();
+
+        this.result = { selectItems: [], from: [] };
+
+        this.fieldReferences = [];
+        this.expressionState = null;
+    }
+
     getResult() {
         return this.result;
     }
@@ -19,10 +28,17 @@ class Listener extends SQLSelectParserListener {
     exitSelectItemList(ctx) {
         const isAllSelected = ctx.MULT_OPERATOR();
         const items = ctx.selectItem() || [];
-        ctx.fields = items.map(item => ({
-            identifier: item.identifier,
-            alias: item.alias
-        }));
+        ctx.fields = items.map(item => {
+            if (!item.identifier && !item.alias) {
+                return;
+            }
+
+            return {
+                identifier: item.identifier,
+                alias: item.alias,
+                fieldReferences: item.fieldReferences,
+            };
+        }).filter(Boolean);
         if (isAllSelected) {
             ctx.fields = [ { identifier: ['*'] }, ...ctx.fields ];
         }
@@ -30,11 +46,28 @@ class Listener extends SQLSelectParserListener {
 
     exitSelectItem(ctx) {
         const tableWildContext = ctx.qualifiedIdentifier();
+        ctx.alias = (ctx.selectAlias() || {}).alias;
         if (tableWildContext) {
             ctx.identifier = tableWildContext.identifier;
+            return;
         }
 
-        ctx.alias = (ctx.selectAlias() || {}).alias;
+        ctx.fieldReferences = ctx.expr().fieldReferences;
+    }
+
+    enterExpr(ctx) {
+        if (!this.expressionState) {
+            this.fieldReferences = [];
+            this.expressionState = ctx.invokingState;
+        }
+    }
+
+    exitExpr(ctx) {
+        if (this.expressionState === ctx.invokingState) {
+            ctx.fieldReferences = this.fieldReferences;
+            this.fieldReferences = [];
+            this.expressionState = null;
+        }
     }
 
     exitSelectAlias(ctx) {
@@ -47,6 +80,7 @@ class Listener extends SQLSelectParserListener {
 
     exitQualifiedIdentifier(ctx) {
         ctx.identifier = ctx.getText().split('.').map(removeQuotes);
+        this.fieldReferences.push(ctx.identifier);
     }
 
     exitFromClause(ctx) {
