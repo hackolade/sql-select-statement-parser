@@ -33,7 +33,14 @@ class Listener extends SQLSelectParserListener {
                 return;
             }
 
+            const { name, tableName, schemaName, databaseName } = getNameObject(item.identifier);
+
             return {
+                name,
+                tableName,
+                schemaName,
+                databaseName,
+                originalName: item.originalName,
                 identifier: item.identifier,
                 alias: item.alias,
                 fieldReferences: item.fieldReferences,
@@ -49,6 +56,7 @@ class Listener extends SQLSelectParserListener {
         ctx.alias = (ctx.selectAlias() || {}).alias;
         if (tableWildContext) {
             ctx.identifier = tableWildContext.identifier;
+            ctx.originalName = tableWildContext.originalName;
             return;
         }
 
@@ -75,12 +83,18 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitTableWild(ctx) {
-        ctx.identifier = ctx.qualifiedIdentifier().identifier;
+        const { identifier, originalName } = ctx.qualifiedIdentifier();
+
+        ctx.identifier = identifier;
+        ctx.originalName = originalName;
     }
 
     exitQualifiedIdentifier(ctx) {
-        ctx.identifier = ctx.getText().split('.').map(removeQuotes);
-        this.fieldReferences.push(ctx.identifier);
+        const identifier = ctx.identifier().map(ctx => ctx.getText()) || [];
+
+        ctx.originalName = identifier[identifier.length - 1];
+        ctx.identifier = identifier.map(removeQuotes);
+        this.fieldReferences.push(ctx.originalName);
     }
 
     exitFromClause(ctx) {
@@ -113,7 +127,7 @@ class Listener extends SQLSelectParserListener {
     exitTableFactor(ctx) {
         const tableData = ctx.singleTable() || ctx.singleTableParens();
         if (tableData) {
-            ctx.tables = [ { table: tableData.table, alias: tableData.alias } ];
+            ctx.tables = [ { table: tableData.table, alias: tableData.alias, originalName: tableData.originalName } ];
             return;
         }
 
@@ -127,14 +141,17 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitSingleTable(ctx) {
-        ctx.table = ctx.qualifiedIdentifier().identifier;
+        const { originalName, identifier } = ctx.qualifiedIdentifier();
+        ctx.table = identifier;
+        ctx.originalName = originalName;
         ctx.alias = (ctx.tableAlias() || {}).alias;
     }
 
-    exitTableParens(ctx) {
+    exitSingleTableParens(ctx) {
         const tableData = ctx.singleTable() || ctx.singleTableParens();
         ctx.table = tableData.table;
         ctx.alias = tableData.alias;
+        ctx.originalName = tableData.originalName;
     }
 
     exitTableReferenceListParens(ctx) {
@@ -158,6 +175,22 @@ const removeQuotes = str => {
     }
 
     return str;
-}
+};
+
+const getNameObject = identifier => {
+    if (!Array.isArray(identifier)) {
+        return '';
+    }
+
+	const IDENTIFIER_NAMES = ['name', 'tableName', 'schemaName', 'databaseName'];
+
+	return identifier.reverse().reduce(
+		(nameObject, name, index) => ({
+			...nameObject,
+			[IDENTIFIER_NAMES[index]]: name,
+		}),
+		{},
+	);
+};
 
 module.exports = Listener;
