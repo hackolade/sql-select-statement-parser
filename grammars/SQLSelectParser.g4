@@ -5,7 +5,7 @@ options {
 }
 
 query:
-    selectStatement (SEMICOLON_SYMBOL EOF? | EOF)
+    (withClause | selectStatement) (SEMICOLON_SYMBOL EOF? | EOF)
 ;
 
 values:
@@ -60,7 +60,7 @@ querySpecification:
 ;
 
 subquery:
-    queryExpressionParens
+    query | queryExpressionParens
 ;
 
 querySpecOption:
@@ -472,18 +472,18 @@ simpleExpr:
     | OPEN_CURLY_SYMBOL identifier expr CLOSE_CURLY_SYMBOL                                              
     | MATCH_SYMBOL identListArg AGAINST_SYMBOL OPEN_PAR_SYMBOL bitExpr fulltextOptions? CLOSE_PAR_SYMBOL
     | BINARY_SYMBOL simpleExpr                                                                          
-    | CAST_SYMBOL OPEN_PAR_SYMBOL expr AS_SYMBOL castType ARRAY_SYMBOL? CLOSE_PAR_SYMBOL                
+    | CAST_SYMBOL OPEN_PAR_SYMBOL expr AS_SYMBOL dataType ARRAY_SYMBOL? CLOSE_PAR_SYMBOL      
+    | simpleExpr CAST_COLON_SYMBOL dataType     
     | CASE_SYMBOL expr? (whenExpression thenExpression)+ elseExpression? END_SYMBOL                     
-    | CONVERT_SYMBOL OPEN_PAR_SYMBOL expr COMMA_SYMBOL castType CLOSE_PAR_SYMBOL                        
+    | CONVERT_SYMBOL OPEN_PAR_SYMBOL expr COMMA_SYMBOL dataType CLOSE_PAR_SYMBOL                        
     | CONVERT_SYMBOL OPEN_PAR_SYMBOL expr USING_SYMBOL charsetName CLOSE_PAR_SYMBOL                     
     | DEFAULT_SYMBOL OPEN_PAR_SYMBOL qualifiedIdentifier CLOSE_PAR_SYMBOL                               
     | VALUES_SYMBOL OPEN_PAR_SYMBOL qualifiedIdentifier CLOSE_PAR_SYMBOL                                
-    | INTERVAL_SYMBOL expr interval PLUS_OPERATOR expr                                                  
+    | INTERVAL_SYMBOL expr interval PLUS_OPERATOR expr                                       
 ;
 
 jsonOperator:
-    JSON_SEPARATOR_SYMBOL textStringLiteral
-    | JSON_UNQUOTED_SEPARATOR_SYMBOL textStringLiteral
+    (JSON_SEPARATOR_SYMBOL | JSON_UNQUOTED_SEPARATOR_SYMBOL) (textStringLiteral | expr)
 ;
 
 sumExpr:
@@ -748,21 +748,6 @@ elseExpression:
     ELSE_SYMBOL expr
 ;
 
-castType:
-    BINARY_SYMBOL fieldLength?
-    | CHAR_SYMBOL fieldLength? charsetWithOptBinary?
-    | nchar fieldLength?
-    | SIGNED_SYMBOL INT_SYMBOL?
-    | UNSIGNED_SYMBOL INT_SYMBOL?
-    | DATE_SYMBOL
-    | TIME_SYMBOL typeDatetimePrecision?
-    | DATETIME_SYMBOL typeDatetimePrecision?
-    | DECIMAL_SYMBOL floatOptions?
-    | JSON_SYMBOL
-    | realType
-    | FLOAT_SYMBOL precision?
-;
-
 exprList:
     expr (COMMA_SYMBOL expr)*
 ;
@@ -836,19 +821,22 @@ indexType:
 dataType:
     (
         INT_SYMBOL
+        | BYTE_INT_SYMBOL
         | TINYINT_SYMBOL
         | SMALLINT_SYMBOL
         | MEDIUMINT_SYMBOL
         | BIGINT_SYMBOL
+        | DECIMAL_SYMBOL
+        | NUMERIC_SYMBOL
+        | NUMBER_SYMBOL
     ) fieldLength? fieldOptions?
     | (REAL_SYMBOL | DOUBLE_SYMBOL PRECISION_SYMBOL?) precision? fieldOptions?
-    | (FLOAT_SYMBOL | DECIMAL_SYMBOL | NUMERIC_SYMBOL | FIXED_SYMBOL) floatOptions? fieldOptions?
+    | (FLOAT_SYMBOL_4 | FLOAT_SYMBOL_8 | FLOAT_SYMBOL | DECIMAL_SYMBOL | NUMERIC_SYMBOL | FIXED_SYMBOL) floatOptions? fieldOptions?
     | BIT_SYMBOL fieldLength?
     | (BOOL_SYMBOL | BOOLEAN_SYMBOL)
-    | CHAR_SYMBOL fieldLength? charsetWithOptBinary?
     | nchar fieldLength? BINARY_SYMBOL?
     | BINARY_SYMBOL fieldLength?
-    | (CHAR_SYMBOL VARYING_SYMBOL | VARCHAR_SYMBOL) fieldLength charsetWithOptBinary?
+    | (VARCHAR_SYMBOL | CHAR_SYMBOL | CHAR_SYMBOL VARYING_SYMBOL | STRING_SYMBOL | TEXT_SYMBOL) fieldLength charsetWithOptBinary?
     | (
         NATIONAL_SYMBOL VARCHAR_SYMBOL
         | NVARCHAR_SYMBOL
@@ -861,6 +849,9 @@ dataType:
     | DATE_SYMBOL
     | TIME_SYMBOL typeDatetimePrecision?
     | TIMESTAMP_SYMBOL typeDatetimePrecision?
+    | TIMESTAMP_SYMBOL WITH_SYMBOL LOCAL_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
+    | TIMESTAMP_SYMBOL WITHOUT_SYMBOL LOCAL_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
+    | TIMESTAMP_SYMBOL WITH_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
     | DATETIME_SYMBOL typeDatetimePrecision?
     | TINYBLOB_SYMBOL
     | BLOB_SYMBOL fieldLength?
@@ -885,16 +876,18 @@ dataType:
         | POLYGON_SYMBOL
         | MULTIPOLYGON_SYMBOL
     )
+    | GEOGRAPHY_SYMBOL
+    | VARIANT_SYMBOL
+    | OBJECT_SYMBOL
+    | ARRAY_SYMBOL
+    | ENUM_SYMBOL (expr (COMMA_SYMBOL expr)*)?
+    | SET_SYMBOL (expr (COMMA_SYMBOL expr)*)?
+    | identifier precision?
 ;
 
 nchar:
     NCHAR_SYMBOL
     | NATIONAL_SYMBOL CHAR_SYMBOL
-;
-
-realType:
-    REAL_SYMBOL
-    | DOUBLE_SYMBOL PRECISION_SYMBOL?
 ;
 
 fieldLength:
@@ -1388,5 +1381,20 @@ identifierKeyword:
     STARTING_SYMBOL |
     GLOBAL_SYMBOL |
     LOCAL_SYMBOL |
-    SESSION_SYMBOL
+    SESSION_SYMBOL |
+    MEDIUMINT_SYMBOL |
+    BYTE_INT_SYMBOL |
+    INT_SYMBOL |
+    WITHOUT_SYMBOL |
+    CHAR_SYMBOL |
+    TIMESTAMP_LTZ_SYMBOL |
+    TIMESTAMP_NTZ_SYMBOL |
+    ZONE_SYMBOL |
+    STRING_SYMBOL |
+    FLOAT_SYMBOL_4 |
+    FLOAT_SYMBOL_8 |
+    NUMBER_SYMBOL |
+    VARIANT_SYMBOL |
+    OBJECT_SYMBOL |
+    GEOGRAPHY_SYMBOL
 ;
