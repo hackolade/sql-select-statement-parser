@@ -90,7 +90,10 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitQualifiedIdentifier(ctx) {
-        const identifier = ctx.identifier().map(ctx => ctx.getText()) || [];
+        let identifier = ctx.identifier().map(ctx => ctx.getText()) || [];
+        if (ctx.MULT_OPERATOR()) {
+            identifier.push('*');
+        } 
 
         ctx.originalName = identifier[identifier.length - 1];
         ctx.identifier = identifier.map(removeQuotes);

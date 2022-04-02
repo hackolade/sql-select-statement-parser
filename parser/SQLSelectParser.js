@@ -39,7 +39,7 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u00a1\u0004\u00a2\t\u00a2\u0004\u00a3\t\u00a3\u0004\u00a4\t\u00a4\u0004",
     "\u00a5\t\u00a5\u0004\u00a6\t\u00a6\u0004\u00a7\t\u00a7\u0004\u00a8\t",
     "\u00a8\u0004\u00a9\t\u00a9\u0004\u00aa\t\u00aa\u0004\u00ab\t\u00ab\u0003",
-    "\u0002\u0003\u0002\u0005\u0002\u0159\n\u0002\u0003\u0002\u0003\u0002",
+    "\u0002\u0005\u0002\u0158\n\u0002\u0003\u0002\u0003\u0002\u0003\u0002",
     "\u0005\u0002\u015d\n\u0002\u0003\u0002\u0005\u0002\u0160\n\u0002\u0003",
     "\u0003\u0003\u0003\u0005\u0003\u0164\n\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0005\u0003\u0169\n\u0003\u0007\u0003\u016b\n\u0003\f\u0003",
@@ -328,7 +328,7 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0144\u0004\u0002\u0147\u0147\u014c\u014c\u0004\u0002\u0156\u0156\u0158",
     "\u015b\u0004\u0002,,.0\u0004\u0002,,..\u0003\u0002.0\u0003\u0002,-\u0003",
     "\u0002\u0159\u015a\u0003\u0002\u009b\u009c\u0004\u0002))\u0093\u0093",
-    "\u0003\u0002\u0003\u0004\u0003\u00021\u0152\u0002\u0ace\u0002\u0158",
+    "\u0003\u0002\u0003\u0004\u0003\u00021\u0152\u0002\u0ace\u0002\u0157",
     "\u0003\u0002\u0002\u0002\u0004\u0163\u0003\u0002\u0002\u0002\u0006\u0175",
     "\u0003\u0002\u0002\u0002\b\u0183\u0003\u0002\u0002\u0002\n\u0186\u0003",
     "\u0002\u0002\u0002\f\u01a5\u0003\u0002\u0002\u0002\u000e\u01b4\u0003",
@@ -411,9 +411,9 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0002\u0148\u096c\u0003\u0002\u0002\u0002\u014a\u096e\u0003\u0002\u0002",
     "\u0002\u014c\u0976\u0003\u0002\u0002\u0002\u014e\u0978\u0003\u0002\u0002",
     "\u0002\u0150\u097b\u0003\u0002\u0002\u0002\u0152\u0983\u0003\u0002\u0002",
-    "\u0002\u0154\u0985\u0003\u0002\u0002\u0002\u0156\u0159\u0005:\u001e",
-    "\u0002\u0157\u0159\u0005\u0006\u0004\u0002\u0158\u0156\u0003\u0002\u0002",
-    "\u0002\u0158\u0157\u0003\u0002\u0002\u0002\u0159\u015f\u0003\u0002\u0002",
+    "\u0002\u0154\u0985\u0003\u0002\u0002\u0002\u0156\u0158\u0005:\u001e",
+    "\u0002\u0157\u0156\u0003\u0002\u0002\u0002\u0157\u0158\u0003\u0002\u0002",
+    "\u0002\u0158\u0159\u0003\u0002\u0002\u0002\u0159\u015f\u0005\u0006\u0004",
     "\u0002\u015a\u015c\u0007\u001b\u0002\u0002\u015b\u015d\u0007\u0002\u0002",
     "\u0003\u015c\u015b\u0003\u0002\u0002\u0002\u015c\u015d\u0003\u0002\u0002",
     "\u0002\u015d\u0160\u0003\u0002\u0002\u0002\u015e\u0160\u0007\u0002\u0002",
@@ -1690,7 +1690,7 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0982\u0984\u0007\u0019\u0002\u0002\u0983\u097d\u0003\u0002\u0002\u0002",
     "\u0983\u097f\u0003\u0002\u0002\u0002\u0983\u0981\u0003\u0002\u0002\u0002",
     "\u0984\u0153\u0003\u0002\u0002\u0002\u0985\u0986\t5\u0002\u0002\u0986",
-    "\u0155\u0003\u0002\u0002\u0002\u0137\u0158\u015c\u015f\u0163\u0168\u016c",
+    "\u0155\u0003\u0002\u0002\u0002\u0137\u0157\u015c\u015f\u0163\u0168\u016c",
     "\u0171\u0175\u017e\u0183\u0186\u018a\u018d\u0191\u0194\u0196\u0199\u019f",
     "\u01a3\u01a5\u01a9\u01ad\u01b1\u01b8\u01ba\u01c1\u01c7\u01cc\u01cf\u01d2",
     "\u01d5\u01d8\u01db\u01df\u01e9\u01ed\u01f3\u01f6\u01f9\u01ff\u0204\u0208",
@@ -2050,21 +2050,16 @@ class SQLSelectParser extends antlr4.Parser {
 	    this.enterRule(localctx, 0, SQLSelectParser.RULE_query);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 342;
+	        this.state = 341;
 	        this._errHandler.sync(this);
 	        var la_ = this._interp.adaptivePredict(this._input,0,this._ctx);
-	        switch(la_) {
-	        case 1:
+	        if(la_===1) {
 	            this.state = 340;
 	            this.withClause();
-	            break;
-
-	        case 2:
-	            this.state = 341;
-	            this.selectStatement();
-	            break;
 
 	        }
+	        this.state = 343;
+	        this.selectStatement();
 	        this.state = 349;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
@@ -15052,10 +15047,6 @@ class QueryContext extends antlr4.ParserRuleContext {
         this.ruleIndex = SQLSelectParser.RULE_query;
     }
 
-	withClause() {
-	    return this.getTypedRuleContext(WithClauseContext,0);
-	};
-
 	selectStatement() {
 	    return this.getTypedRuleContext(SelectStatementContext,0);
 	};
@@ -15066,6 +15057,10 @@ class QueryContext extends antlr4.ParserRuleContext {
 
 	EOF() {
 	    return this.getToken(SQLSelectParser.EOF, 0);
+	};
+
+	withClause() {
+	    return this.getTypedRuleContext(WithClauseContext,0);
 	};
 
 	enterRule(listener) {

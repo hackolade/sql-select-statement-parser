@@ -5,7 +5,7 @@ options {
 }
 
 query:
-    (withClause | selectStatement) (SEMICOLON_SYMBOL EOF? | EOF)
+    withClause? selectStatement (SEMICOLON_SYMBOL EOF? | EOF)
 ;
 
 values:
