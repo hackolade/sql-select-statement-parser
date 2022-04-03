@@ -41,13 +41,12 @@ class Listener extends SQLSelectParserListener {
                 schemaName,
                 databaseName,
                 originalName: item.originalName,
-                identifier: item.identifier,
                 alias: item.alias,
                 fieldReferences: item.fieldReferences,
             };
         }).filter(Boolean);
         if (isAllSelected) {
-            ctx.fields = [ { identifier: ['*'] }, ...ctx.fields ];
+            ctx.fields = [ { name: '*' }, ...ctx.fields ];
         }
     }
 
@@ -130,7 +129,14 @@ class Listener extends SQLSelectParserListener {
     exitTableFactor(ctx) {
         const tableData = ctx.singleTable() || ctx.singleTableParens();
         if (tableData) {
-            ctx.tables = [ { table: tableData.table, alias: tableData.alias, originalName: tableData.originalName } ];
+            ctx.tables = [ {
+                table: tableData.table,
+                schemaName: tableData.schemaName,
+                databaseName: tableData.databaseName,
+                originalName: tableData.originalName,
+                alias: tableData.alias,
+                originalName: tableData.originalName,
+            }];
             return;
         }
 
@@ -145,14 +151,21 @@ class Listener extends SQLSelectParserListener {
 
     exitSingleTable(ctx) {
         const { originalName, identifier } = ctx.qualifiedIdentifier();
-        ctx.table = identifier;
+        const { tableName, schemaName, databaseName } = getNameObject([...(identifier || []), 'column']);
+
+        ctx.table = tableName;
+        ctx.schemaName = schemaName;
+        ctx.databaseName = databaseName;
         ctx.originalName = originalName;
         ctx.alias = (ctx.tableAlias() || {}).alias;
     }
 
     exitSingleTableParens(ctx) {
         const tableData = ctx.singleTable() || ctx.singleTableParens();
-        ctx.table = tableData.table;
+        ctx.table = tableName;
+        ctx.schemaName = schemaName;
+        ctx.databaseName = databaseName;
+        ctx.originalName = originalName;
         ctx.alias = tableData.alias;
         ctx.originalName = tableData.originalName;
     }

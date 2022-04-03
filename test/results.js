@@ -2,20 +2,19 @@ const simple = {
     selectItems: [{
         name: "column",
         originalName: "column",
-        identifier: ["column"],
     }],
     from: [{
-        table: [ "table" ],
+        table: "table",
         originalName: "table",
     }],
 };
 
 const star = {
     selectItems: [{
-        identifier: ["*"]
+        name: "*"
     }],
     from: [{
-        table: ["table"],
+        table: "table",
         originalName: "table",
     }],
 };
@@ -24,11 +23,10 @@ const aliases = {
     selectItems: [{
         name: "column",
         originalName: "column",
-        identifier: ["column"],
         alias: "columnAlias"
     }],
     from: [{
-        table: ["table"],
+        table: "table",
         alias: "tableAlias",
         originalName: "table",
     }],
@@ -39,10 +37,9 @@ const starWithTable = {
         name: "*",
         tableName: "table",
         originalName: "*",
-        identifier: ["*", "table"],
     }],
     from: [{
-        table: ["table"],
+        table: "table",
         originalName: "table",
     }],
 };
@@ -54,19 +51,11 @@ const specifiedSchema = {
         schemaName: "schema",
         databaseName: "database",
         originalName: "column",
-        identifier: [
-          "column",
-          "table",
-          "schema",
-          "database",
-        ],
     }],
     from: [{
-        table: [
-          "database",
-          "schema",
-          "table",
-        ],
+        table: "table",
+        schemaName: "schema",
+        databaseName: "database",
         originalName: "table",
     }],
 };
@@ -76,10 +65,10 @@ const singleQuotes = {
         name: "column",
         tableName: "table",
         originalName: "'column'",
-        identifier: ["column", "table"]
     }],
     from: [{
-        table: ["schema", "table"],
+        table: "table",
+        schemaName: "schema",
         originalName: "'table'",
     }],
 };
@@ -89,10 +78,10 @@ const doubleQuotes = {
         name: "column",
         tableName: "table",
         originalName: '"column"',
-        identifier: ["column", "table"]
     }],
     from: [{
-        table: ["schema", "table"],
+        table: "table",
+        schemaName: "schema",
         originalName: '"table"',
     }],
 };
@@ -102,10 +91,10 @@ const backtickQuotes = {
         name: "column",
         tableName: "table",
         originalName: "`column`",
-        identifier: ["column", "table"]
     }],
     from: [{
-        table: ["schema", "table"],
+        table: "table",
+        schemaName: "schema",
         originalName: "`table`",
     }],
 };
@@ -115,10 +104,10 @@ const squareBrackets = {
         name: "column",
         tableName: "table",
         originalName: "[column]",
-        identifier: ["column", "table"]
     }],
     from: [{
-        table: ["schema", "table"],
+        table: "table",
+        schemaName: "schema",
         originalName: "[table]",
     }],
 };
@@ -133,7 +122,7 @@ const functions = {
         fieldReferences: ["column2", "'ID'"],
     }],
     from: [{
-        table: ["table"],
+        table: "table",
         originalName: "table",
     }],
 };
