@@ -11,7 +11,10 @@ npm install @hackolade/sql-select-statement-parser
 
 ## Usage
 ```javascript
-const result = parseSelectStatement(`SELECT "database".'schema'.table.[column] as columnAlias FROM database.schema.table AS tableAlias;`)
+const result = parseSelectStatement(`
+    SELECT "database".'schema'.table.[column] AS columnAlias
+    FROM database.schema.table AS tableAlias;
+`);
 ```
 
 ## Result structure
@@ -22,16 +25,20 @@ const result = parseSelectStatement(`SELECT "database".'schema'.table.[column] a
         tableName: "table",             // table name
         schemaName: "schema",           // schema name (or database name for some dialects)
         databaseName: "database",       // database name (if schemas also exists in the dialect)
-        originalName: "[column]",       // original column name including quotes (or square brackets for MSSQL)
+        originalName: "[column]",       // original column name including quotes
+                                        // (or square brackets for MSSQL)
         alias: "columnAlias",           // column alias
-        fieldReferences: ["column"],    // List of column names used in expression. Appears only when selected item is described by expression. 
+        fieldReferences: ["column"],    // List of column names used in expression.
+                                        // Appears only when selected item is
+                                        // described by expression. 
     }],
     from: [{                            // array of tables described in a FROM clause
         table: "table",                 // table name
         schemaName: "schema",           // schema name (or database name for some dialects)
         databaseName: "database",       // database name (if schemas also exists in the dialect)
         alias: "tableAlias",            // table alias
-        originalName: "`table`",        // original table name including quotes (or square brackets for MSSQL)
+        originalName: "`table`",        // original table name including quotes
+                                        //(or square brackets for MSSQL)
     }]
 }
 ```
