@@ -2,7 +2,7 @@
 
 Dialect-agnostic parser of SQL SELECT statements.
 
-Function parseSelectStatement accepts SQL SELECT statement of different SQL dialects (MySQL, Snowflake, PostgreSQL, MSSQL, etc.) and returns object describing columns and tables names those were used in the query.
+Function parseSelectStatement accepts SQL SELECT statement of different SQL dialects (MySQL, Oracle, PostgreSQL, T-SQL, Snowflake, etc.) and returns object describing columns and tables names used in the query.
 
 ## Installation
 ```
