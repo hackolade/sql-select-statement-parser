@@ -24,9 +24,9 @@ const result = parseSelectStatement(`
         name: "column",                 // column name or *
         tableName: "table",             // table name
         schemaName: "schema",           // schema name (or database name for some dialects)
-        databaseName: "database",       // database name (if schemas also exists in the dialect)
+        databaseName: "database",       // database name (if schema also exists in the dialect)
         originalName: "[column]",       // original column name including quotes
-                                        // (or square brackets for MSSQL)
+                                        // (or square brackets for T-SQL)
         alias: "columnAlias",           // column alias
         fieldReferences: ["column"],    // List of column names used in expression.
                                         // Appears only when selected item is
@@ -35,10 +35,10 @@ const result = parseSelectStatement(`
     from: [{                            // array of tables described in a FROM clause
         table: "table",                 // table name
         schemaName: "schema",           // schema name (or database name for some dialects)
-        databaseName: "database",       // database name (if schemas also exists in the dialect)
+        databaseName: "database",       // database name (if schema also exists in the dialect)
         alias: "tableAlias",            // table alias
         originalName: "`table`",        // original table name including quotes
-                                        //(or square brackets for MSSQL)
+                                        //(or square brackets for T-SQL)
     }]
 }
 ```
