@@ -437,20 +437,21 @@ predicateOperations:
 ;
 
 bitExpr:
-    simpleExpr
-    | bitExpr BITWISE_XOR_OPERATOR bitExpr
+    bitExpr BITWISE_XOR_OPERATOR bitExpr
     | bitExpr (
         MULT_OPERATOR
         | DIV_OPERATOR
         | MOD_OPERATOR
         | DIV_SYMBOL
         | MOD_SYMBOL
+        | PLUS_OPERATOR
+        | MINUS_OPERATOR
     ) bitExpr
-    | bitExpr (PLUS_OPERATOR | MINUS_OPERATOR) bitExpr
     | bitExpr (PLUS_OPERATOR | MINUS_OPERATOR) INTERVAL_SYMBOL expr interval
     | bitExpr (SHIFT_LEFT_OPERATOR | SHIFT_RIGHT_OPERATOR) bitExpr
     | bitExpr BITWISE_AND_OPERATOR bitExpr
     | bitExpr BITWISE_OR_OPERATOR bitExpr
+    | simpleExpr
 ;
 
 simpleExpr:
