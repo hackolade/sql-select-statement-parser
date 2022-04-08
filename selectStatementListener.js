@@ -29,10 +29,6 @@ class Listener extends SQLSelectParserListener {
         const isAllSelected = ctx.MULT_OPERATOR();
         const items = ctx.selectItem() || [];
         ctx.fields = items.map(item => {
-            if (!item.identifier && !item.alias) {
-                return;
-            }
-
             const { name, tableName, schemaName, databaseName } = getNameObject(item.identifier);
 
             return {
@@ -96,7 +92,7 @@ class Listener extends SQLSelectParserListener {
 
         ctx.originalName = identifier[identifier.length - 1];
         ctx.identifier = identifier.map(removeQuotes);
-        this.fieldReferences.push(ctx.originalName);
+        this.fieldReferences.push(ctx.identifier);
     }
 
     exitFromClause(ctx) {
