@@ -92,7 +92,7 @@ class Listener extends SQLSelectParserListener {
 
         ctx.originalName = identifier[identifier.length - 1];
         ctx.identifier = identifier.map(removeQuotes);
-        this.fieldReferences.push(ctx.identifier);
+        this.fieldReferences.push(ctx.identifier[ctx.identifier.length - 1]);
     }
 
     exitFromClause(ctx) {
