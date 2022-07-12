@@ -119,7 +119,7 @@ const functions = {
     },
     {
         alias: "alias2",
-        fieldReferences: ["column2", "'ID'"],
+        fieldReferences: ["column2", "ID"],
     }],
     from: [{
         table: "table",

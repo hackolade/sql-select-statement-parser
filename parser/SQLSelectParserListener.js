@@ -1012,15 +1012,6 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#castType.
-	enterCastType(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#castType.
-	exitCastType(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLSelectParser#exprList.
 	enterExprList(ctx) {
 	}
@@ -1144,15 +1135,6 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SQLSelectParser#nchar.
 	exitNchar(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLSelectParser#realType.
-	enterRealType(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#realType.
-	exitRealType(ctx) {
 	}
 
 

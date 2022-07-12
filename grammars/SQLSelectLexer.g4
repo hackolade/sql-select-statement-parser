@@ -354,12 +354,17 @@ BIT_SYMBOL: B I T;
 BOOL_SYMBOL: B O O L;
 VARYING_SYMBOL: V A R Y I N G;
 VARCHAR_SYMBOL: V A R C H A R;
+VARCHAR2_SYMBOL: V A R C H A R '2';
 NATIONAL_SYMBOL: N A T I O N A L;
 NVARCHAR_SYMBOL: N V A R C H A R;
+NVARCHAR2_SYMBOL: N V A R C H A R '2';
 NCHAR_SYMBOL: N C H A R;
 VARBINARY_SYMBOL: V A R B I N A R Y;
 TINYBLOB_SYMBOL: T I N Y B L O B;
 BLOB_SYMBOL: B L O B;
+CLOB_SYMBOL: C L O B;
+BFILE_SYMBOL: B F I L E;
+RAW_SYMBOL: R A W;
 MEDIUMBLOB_SYMBOL: M E D I U M B L O B;
 LONGBLOB_SYMBOL: L O N G B L O B;
 LONG_SYMBOL: L O N G;
@@ -469,7 +474,7 @@ VERSION_COMMENT_END: '*/'  -> channel(HIDDEN);
 BLOCK_COMMENT:       ( '/**/' | '/*' ~[!] .*? '*/')                         -> channel(HIDDEN);
 
 POUND_COMMENT:    '#' ~([\n\r])*                                   -> channel(HIDDEN);
-DASHDASH_COMMENT: DOUBLE_DASH ([ \t] (~[\n\r])* | LINEBREAK | EOF) -> channel(HIDDEN);
+DASHDASH_COMMENT: DOUBLE_DASH ((~[\n\r])* | LINEBREAK | EOF) -> channel(HIDDEN);
 
 fragment DOUBLE_DASH: '--';
 fragment LINEBREAK:   [\n\r];
