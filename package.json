@@ -1,6 +1,6 @@
 {
   "name": "@hackolade/sql-select-statement-parser",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "index.js",
   "author": "Hackolade",
