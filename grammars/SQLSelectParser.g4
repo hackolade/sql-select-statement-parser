@@ -18,10 +18,11 @@ selectStatement:
 ;
 
 selectStatementWithInto:
-    OPEN_PAR_SYMBOL selectStatementWithInto CLOSE_PAR_SYMBOL
-    | queryExpression intoClause lockingClauseList?
-    | lockingClauseList intoClause
-;
+	OPEN_PAR_SYMBOL+ selectStatementWithIntoBody CLOSE_PAR_SYMBOL+;
+
+selectStatementWithIntoBody:
+	queryExpression intoClause lockingClauseList?
+	| lockingClauseList intoClause;
 
 queryExpression:
     (withClause)? (
@@ -711,7 +712,7 @@ substringFunction:
 ;
 
 functionCall:
-    pureIdentifier OPEN_PAR_SYMBOL udfExprList? CLOSE_PAR_SYMBOL     // For both UDF + other functions.
+    pureIdentifier OPEN_PAR_SYMBOL udfExprList? CLOSE_PAR_SYMBOL // For both UDF + other functions.
     | qualifiedIdentifier OPEN_PAR_SYMBOL exprList? CLOSE_PAR_SYMBOL // Other functions only.
 ;
 
@@ -720,7 +721,7 @@ udfExprList:
 ;
 
 udfExpr:
-    expr selectAlias?
+    expr qualifiedIdentifier? selectAlias?
 ;
 
 variable:
@@ -837,7 +838,8 @@ dataType:
     | (BOOL_SYMBOL | BOOLEAN_SYMBOL)
     | nchar fieldLength? BINARY_SYMBOL?
     | BINARY_SYMBOL fieldLength?
-    | (VARCHAR_SYMBOL | VARCHAR2_SYMBOL | CHAR_SYMBOL | CHAR_SYMBOL VARYING_SYMBOL | STRING_SYMBOL | TEXT_SYMBOL) fieldLength charsetWithOptBinary?
+    | CHAR_SYMBOL VARYING_SYMBOL
+    | (VARCHAR_SYMBOL | VARCHAR2_SYMBOL | CHAR_SYMBOL | STRING_SYMBOL | TEXT_SYMBOL) fieldLength charsetWithOptBinary?
     | (
         NATIONAL_SYMBOL VARCHAR_SYMBOL
         | NVARCHAR2_SYMBOL

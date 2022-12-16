@@ -12,6 +12,9 @@ const {
     backtickQuotes,
     squareBrackets,
     functions,
+    generatedNullColumn,
+    functionWithDistinct,
+    characterVarying,
 } = require('./results');
 
 describe('Parsing of primitive SELECT statements', () => {
@@ -27,9 +30,17 @@ describe('Parsing of primitive SELECT statements', () => {
         const result = parseSelectStatement('SELECT database.schema.table.column FROM database.schema.table');
         assert.deepEqual(specifiedSchema, filterUndefinedProperties(result));
     });
+    it('should parse SELECT null::number AS "test" FROM tbl', () => {
+        const result = parseSelectStatement('SELECT NULL::number AS "test" FROM tbl;');
+        assert.deepEqual(generatedNullColumn, filterUndefinedProperties(result));
+    });
+    it('should parse character varying type casting', () => {
+        const result = parseSelectStatement('SELECT NULL::character varying AS "varying_test" FROM tbl;');
+        assert.deepEqual(characterVarying, filterUndefinedProperties(result));
+    })
 });
 
-describe('Parsing of SELECT * statements', () => {   
+describe('Parsing of SELECT * statements', () => {
     it('should parse SELECT * queries', () => {
         const result = parseSelectStatement('SELECT * FROM table');
         assert.deepEqual(star, filterUndefinedProperties(result));
@@ -60,7 +71,7 @@ describe('Parsing of SELECT statements with quotes from different dialects', () 
 });
 
 describe('Parsing of complex SELECT statements', () => {
-     it('should parse statement with "WITH" predicate', () => {
+    it('should parse statement with "WITH" predicate', () => {
         const result = parseSelectStatement('WITH f AS (SELECT columnWith FROM tableWith) SELECT column from table');
         assert.deepEqual(simple, filterUndefinedProperties(result));
     });
@@ -71,6 +82,10 @@ describe('Parsing of complex SELECT statements', () => {
             from table`);
         assert.deepEqual(functions, filterUndefinedProperties(result));
     });
+    it('should parse function with DISTINCT', () => {
+        const result = parseSelectStatement(`SELECT array_agg(DISTINCT tbl.id) AS "test_agg_dist" FROM original_tbl;`);
+        assert.deepEqual(functionWithDistinct, filterUndefinedProperties(result));
+    })
 });
 
 const filterUndefinedProperties = object => JSON.parse(JSON.stringify(object));
