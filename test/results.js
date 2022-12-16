@@ -164,6 +164,25 @@ const characterVarying = {
     }]
 }
 
+const distinctOn = {
+    from: [
+      {
+        originalName: 'tbl',
+        table: 'tbl'
+      }
+    ],
+    selectItems: [
+      {
+        name: 'id',
+        originalName: 'id'
+      },
+      {
+        name: 'col',
+        originalName: 'col'
+      }
+    ]
+  }
+
 module.exports = {
     simple,
     star,
@@ -178,4 +197,5 @@ module.exports = {
     generatedNullColumn,
     functionWithDistinct,
     characterVarying,
+    distinctOn,
 };

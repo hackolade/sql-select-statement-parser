@@ -15,6 +15,7 @@ const {
     generatedNullColumn,
     functionWithDistinct,
     characterVarying,
+    distinctOn,
 } = require('./results');
 
 describe('Parsing of primitive SELECT statements', () => {
@@ -85,6 +86,10 @@ describe('Parsing of complex SELECT statements', () => {
     it('should parse function with DISTINCT', () => {
         const result = parseSelectStatement(`SELECT array_agg(DISTINCT tbl.id) AS "test_agg_dist" FROM original_tbl;`);
         assert.deepEqual(functionWithDistinct, filterUndefinedProperties(result));
+    })
+    it('should parse DISTINCT ON', () => {
+        const result = parseSelectStatement(`SELECT DISTINCT ON (id) id, col FROM tbl;`);
+        assert.deepEqual(distinctOn, filterUndefinedProperties(result));
     })
 });
 
