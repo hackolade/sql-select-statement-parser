@@ -18,11 +18,10 @@ selectStatement:
 ;
 
 selectStatementWithInto:
-	OPEN_PAR_SYMBOL+ selectStatementWithIntoBody CLOSE_PAR_SYMBOL+;
-
-selectStatementWithIntoBody:
-	queryExpression intoClause lockingClauseList?
-	| lockingClauseList intoClause;
+    OPEN_PAR_SYMBOL selectStatementWithInto CLOSE_PAR_SYMBOL
+    | queryExpression intoClause lockingClauseList?
+	| lockingClauseList intoClause
+;
 
 queryExpression:
     (withClause)? (

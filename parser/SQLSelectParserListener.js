@@ -40,15 +40,6 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#selectStatementWithIntoBody.
-	enterSelectStatementWithIntoBody(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#selectStatementWithIntoBody.
-	exitSelectStatementWithIntoBody(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLSelectParser#queryExpression.
 	enterQueryExpression(ctx) {
 	}
