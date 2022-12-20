@@ -127,6 +127,62 @@ const functions = {
     }],
 };
 
+const generatedNullColumn = {
+    selectItems: [{
+        alias: "test",
+    }],
+    from: [{
+        table: "tbl",
+        originalName: "tbl",
+    }],
+}
+
+const functionWithDistinct = {
+    from: [
+        {
+            originalName: 'original_tbl',
+            table: 'original_tbl',
+        },
+    ],
+    selectItems: [
+        {
+            alias: 'test_agg_dist',
+            fieldReferences: ['id'],
+        },
+    ],
+};
+
+const characterVarying = {
+    selectItems: [
+        {
+            "alias": "varying_test"
+        }
+    ],
+    from: [{
+        table: "tbl",
+        originalName: "tbl",
+    }]
+}
+
+const distinctOn = {
+    from: [
+      {
+        originalName: 'tbl',
+        table: 'tbl'
+      }
+    ],
+    selectItems: [
+      {
+        name: 'id',
+        originalName: 'id'
+      },
+      {
+        name: 'col',
+        originalName: 'col'
+      }
+    ]
+  }
+
 module.exports = {
     simple,
     star,
@@ -138,4 +194,8 @@ module.exports = {
     backtickQuotes,
     squareBrackets,
     functions,
+    generatedNullColumn,
+    functionWithDistinct,
+    characterVarying,
+    distinctOn,
 };

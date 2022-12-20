@@ -1,6 +1,6 @@
 {
   "name": "@hackolade/sql-select-statement-parser",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "index.js",
   "author": "Hackolade",
@@ -12,6 +12,7 @@
     "mocha": "^9.2.2"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build:grammar": "antlr4 -Dlanguage=JavaScript -lib grammars -o parser -no-visitor -listener -Xexact-output-dir grammars/SQLSelectParser.g4 grammars/SQLSelectLexer.g4"
   }
 }

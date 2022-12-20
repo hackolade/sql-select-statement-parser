@@ -38,11 +38,11 @@ class Listener extends SQLSelectParserListener {
                 databaseName,
                 originalName: item.originalName,
                 alias: item.alias,
-                fieldReferences: item.fieldReferences,
+                fieldReferences: getFieldReferences(item.fieldReferences)
             };
         }).filter(Boolean);
         if (isAllSelected) {
-            ctx.fields = [ { name: '*' }, ...ctx.fields ];
+            ctx.fields = [{ name: '*' }, ...ctx.fields];
         }
     }
 
@@ -85,13 +85,16 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitQualifiedIdentifier(ctx) {
-        let identifier = ctx.identifier().map(ctx => ctx.getText()) || [];
+        const identifiers = ctx.identifier();
+        let identifier = identifiers.map(ctx => ctx.getText()) || [];
         if (ctx.MULT_OPERATOR()) {
             identifier.push('*');
-        } 
+        }
 
         ctx.originalName = identifier[identifier.length - 1];
         ctx.identifier = identifier.map(removeQuotes);
+
+        if (identifiers.some(ctx => ctx.identifierKeyword?.()?.NULL_SYMBOL() || ctx.identifierKeyword?.()?.DISTINCT_SYMBOL())) return;
         this.fieldReferences.push(ctx.identifier[ctx.identifier.length - 1]);
     }
 
@@ -108,7 +111,7 @@ class Listener extends SQLSelectParserListener {
 
         const joinedTables = ctx.joinedTable() || [];
 
-        ctx.tables = [ ...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)]
+        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)]
     }
 
     exitJoinedTable(ctx) {
@@ -119,13 +122,13 @@ class Listener extends SQLSelectParserListener {
         ctx.tables = ctx.tableFactor().tables;
         const joinedTables = ctx.joinedTable() || [];
 
-        ctx.tables = [ ...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)];
-    }   
+        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)];
+    }
 
     exitTableFactor(ctx) {
         const tableData = ctx.singleTable() || ctx.singleTableParens();
         if (tableData) {
-            ctx.tables = [ {
+            ctx.tables = [{
                 table: tableData.table,
                 schemaName: tableData.schemaName,
                 databaseName: tableData.databaseName,
@@ -194,15 +197,21 @@ const getNameObject = identifier => {
         return '';
     }
 
-	const IDENTIFIER_NAMES = ['name', 'tableName', 'schemaName', 'databaseName'];
+    const IDENTIFIER_NAMES = ['name', 'tableName', 'schemaName', 'databaseName'];
 
-	return identifier.reverse().reduce(
-		(nameObject, name, index) => ({
-			...nameObject,
-			[IDENTIFIER_NAMES[index]]: name,
-		}),
-		{},
-	);
+    return identifier.reverse().reduce(
+        (nameObject, name, index) => ({
+            ...nameObject,
+            [IDENTIFIER_NAMES[index]]: name,
+        }),
+        {},
+    );
 };
+
+const getFieldReferences = fieldReferences => {
+    if (fieldReferences?.length > 0) {
+        return fieldReferences;
+    }
+}
 
 module.exports = Listener;
