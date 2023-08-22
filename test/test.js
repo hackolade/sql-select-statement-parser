@@ -15,7 +15,8 @@ const {
     generatedNullColumn,
     functionWithDistinct,
     characterVarying,
-    distinctOn, curlyBraces,
+    distinctOn,
+    curlyBraces,
 } = require('./results');
 
 describe('Parsing of primitive SELECT statements', () => {
