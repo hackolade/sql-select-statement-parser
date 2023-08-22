@@ -112,6 +112,19 @@ const squareBrackets = {
     }],
 };
 
+const curlyBraces = {
+    selectItems: [{
+        name: "{{column}}",
+        tableName: "{{table}}",
+        originalName: "{{column}}",
+    }],
+    from: [{
+        table: "{{table}}",
+        schemaName: "{{schema}}",
+        originalName: "{{table}}",
+    }],
+};
+
 const functions = {
     selectItems: [{
         alias: "alias1",
@@ -193,6 +206,7 @@ module.exports = {
     doubleQuotes,
     backtickQuotes,
     squareBrackets,
+    curlyBraces,
     functions,
     generatedNullColumn,
     functionWithDistinct,

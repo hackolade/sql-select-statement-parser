@@ -983,6 +983,7 @@ pureIdentifier:
     | SINGLE_QUOTED_TEXT
     | DOUBLE_QUOTED_TEXT
     | BRACKET_QUOTED_TEXT
+    | CURLY_BRACES_QUOTED_TEXT
 ;
 
 identifier:
