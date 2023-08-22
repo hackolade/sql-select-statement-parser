@@ -16,6 +16,7 @@ const {
     functionWithDistinct,
     characterVarying,
     distinctOn,
+    curlyBraces,
 } = require('./results');
 
 describe('Parsing of primitive SELECT statements', () => {
@@ -68,6 +69,10 @@ describe('Parsing of SELECT statements with quotes from different dialects', () 
     it('should parse statement with square brackets (MSSQL-like)', () => {
         const result = parseSelectStatement('SELECT [table].[column] FROM [schema].[table]');
         assert.deepEqual(squareBrackets, filterUndefinedProperties(result));
+    });
+    it('should parse statement with curly braces (Generic SQL)', () => {
+        const result = parseSelectStatement('SELECT {{table}}.{{column}} FROM {{schema}}.{{table}}');
+        assert.deepEqual(curlyBraces, filterUndefinedProperties(result));
     });
 });
 
