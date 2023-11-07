@@ -436,6 +436,15 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
+	// Enter a parse tree produced by SQLSelectParser#qualifyClause.
+	enterQualifyClause(ctx) {
+	}
+
+	// Exit a parse tree produced by SQLSelectParser#qualifyClause.
+	exitQualifyClause(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SQLSelectParser#tableReference.
 	enterTableReference(ctx) {
 	}

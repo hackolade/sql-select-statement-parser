@@ -54,7 +54,7 @@ queryPrimary:
 ;
 
 querySpecification:
-    SELECT_SYMBOL selectOption* selectItemList intoClause? fromClause? whereClause? groupByClause? havingClause? (
+    SELECT_SYMBOL selectOption* selectItemList intoClause? fromClause? whereClause? qualifyClause? groupByClause? havingClause? (
         windowClause
     )?
 ;
@@ -258,6 +258,10 @@ selectAlias:
 
 whereClause:
     WHERE_SYMBOL expr
+;
+
+qualifyClause:
+    QUALIFY_SYMBOL expr
 ;
 
 tableReference: ( 
