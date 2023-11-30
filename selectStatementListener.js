@@ -47,7 +47,7 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitSelectItem(ctx) {
-        const tableWildContext = ctx.qualifiedIdentifier();
+        const tableWildContext = ctx.qualifiedIdentifier() || ctx.jsonPathIdentifier();
         ctx.alias = (ctx.selectAlias() || {}).alias;
         if (tableWildContext) {
             ctx.identifier = tableWildContext.identifier;
@@ -56,6 +56,18 @@ class Listener extends SQLSelectParserListener {
         }
 
         ctx.fieldReferences = ctx.expr().fieldReferences;
+    }
+
+    exitJsonPathIdentifier(ctx) {
+        const identifiers = ctx.identifier();
+        const fullTableName = ctx.qualifiedIdentifier().identifier;
+
+        let identifier = identifiers.map(ctx => ctx.getText()) || [];
+        ctx.originalName = identifier.join('.');
+        ctx.identifier = [...fullTableName, identifier[identifier.length - 1]].map(removeQuotes);
+
+        if (identifiers.some(ctx => ctx.identifierKeyword?.()?.NULL_SYMBOL() || ctx.identifierKeyword?.()?.DISTINCT_SYMBOL())) return;
+        this.fieldReferences.push(ctx.identifier[ctx.identifier.length - 1]);
     }
 
     enterExpr(ctx) {
@@ -134,7 +146,6 @@ class Listener extends SQLSelectParserListener {
                 databaseName: tableData.databaseName,
                 originalName: tableData.originalName,
                 alias: tableData.alias,
-                originalName: tableData.originalName,
             }];
             return;
         }

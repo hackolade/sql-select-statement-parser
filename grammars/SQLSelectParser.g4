@@ -248,7 +248,7 @@ selectItemList: (selectItem | MULT_OPERATOR) (COMMA_SYMBOL selectItem)*
 ;
 
 selectItem:
-    qualifiedIdentifier selectAlias?
+    (qualifiedIdentifier | jsonPathIdentifier) selectAlias?
     | expr selectAlias?
 ;
 
@@ -995,7 +995,7 @@ identifier:
     | identifierKeyword
 ;
 
-identifierList: 
+identifierList:
     identifier (COMMA_SYMBOL identifier)*
 ;
 
@@ -1005,6 +1005,10 @@ identifierListWithParentheses:
 
 qualifiedIdentifier:
    identifier (DOT_SYMBOL identifier)* (DOT_SYMBOL MULT_OPERATOR)?
+;
+
+jsonPathIdentifier:
+    qualifiedIdentifier COLON_SYMBOL identifier  (((DOT_SYMBOL | COLON_SYMBOL) identifier) | BRACKET_QUOTED_TEXT)* (CAST_COLON_SYMBOL dataType)?
 ;
 
 dotIdentifier:
