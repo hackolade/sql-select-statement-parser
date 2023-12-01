@@ -54,7 +54,7 @@ queryPrimary:
 ;
 
 querySpecification:
-    SELECT_SYMBOL selectOption* selectItemList intoClause? fromClause? whereClause? qualifyClause? groupByClause? havingClause? (
+    SELECT_SYMBOL selectOption* selectItemList intoClause? fromClause? whereClause? unpivotClause* qualifyClause? groupByClause? havingClause? (
         windowClause
     )?
 ;
@@ -431,6 +431,7 @@ predicate:
         notRule? predicateOperations
         | MEMBER_SYMBOL OF_SYMBOL? simpleExprWithParentheses
         | SOUNDS_SYMBOL LIKE_SYMBOL bitExpr
+        | nullTreatment
     )?
 ;
 
@@ -717,7 +718,7 @@ substringFunction:
 
 functionCall:
     pureIdentifier OPEN_PAR_SYMBOL udfExprList? CLOSE_PAR_SYMBOL // For both UDF + other functions.
-    | qualifiedIdentifier OPEN_PAR_SYMBOL exprList? CLOSE_PAR_SYMBOL // Other functions only.
+    | qualifiedIdentifier OPEN_PAR_SYMBOL (exprList? | jsonPathCast?) CLOSE_PAR_SYMBOL // Other functions only.
 ;
 
 udfExprList:
@@ -726,6 +727,10 @@ udfExprList:
 
 udfExpr:
     expr qualifiedIdentifier? selectAlias?
+;
+
+unpivotClause:
+    UNPIVOT_SYMBOL OPEN_PAR_SYMBOL identifier (FOR_SYMBOL identifier)? IN_SYMBOL identifierListWithParentheses CLOSE_PAR_SYMBOL whereClause*
 ;
 
 variable:
@@ -858,6 +863,8 @@ dataType:
     | DATE_SYMBOL
     | TIME_SYMBOL typeDatetimePrecision?
     | TIMESTAMP_SYMBOL typeDatetimePrecision?
+    | TIMESTAMP_NTZ_SYMBOL typeDatetimePrecision?
+    | TIMESTAMP_LTZ_SYMBOL typeDatetimePrecision?
     | TIMESTAMP_SYMBOL WITH_SYMBOL LOCAL_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
     | TIMESTAMP_SYMBOL WITHOUT_SYMBOL LOCAL_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
     | TIMESTAMP_SYMBOL WITH_SYMBOL TIME_SYMBOL ZONE_SYMBOL typeDatetimePrecision?
@@ -1008,7 +1015,11 @@ qualifiedIdentifier:
 ;
 
 jsonPathIdentifier:
-    qualifiedIdentifier COLON_SYMBOL identifier  (((DOT_SYMBOL | COLON_SYMBOL) identifier) | BRACKET_QUOTED_TEXT)* (CAST_COLON_SYMBOL dataType)?
+    qualifiedIdentifier COLON_SYMBOL identifier  (((DOT_SYMBOL | COLON_SYMBOL) identifier) | BRACKET_QUOTED_TEXT)* (CAST_COLON_SYMBOL dataType)? (COLLATE_SYMBOL identifier?)?
+;
+
+jsonPathCast:
+    jsonPathIdentifier selectAlias?
 ;
 
 dotIdentifier:

@@ -967,6 +967,15 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
+	// Enter a parse tree produced by SQLSelectParser#unpivotClause.
+	enterUnpivotClause(ctx) {
+	}
+
+	// Exit a parse tree produced by SQLSelectParser#unpivotClause.
+	exitUnpivotClause(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SQLSelectParser#variable.
 	enterVariable(ctx) {
 	}
@@ -1360,6 +1369,15 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SQLSelectParser#jsonPathIdentifier.
 	exitJsonPathIdentifier(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SQLSelectParser#jsonPathCast.
+	enterJsonPathCast(ctx) {
+	}
+
+	// Exit a parse tree produced by SQLSelectParser#jsonPathCast.
+	exitJsonPathCast(ctx) {
 	}
 
 
