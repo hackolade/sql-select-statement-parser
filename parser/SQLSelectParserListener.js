@@ -1372,15 +1372,6 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SQLSelectParser#jsonPathCast.
-	enterJsonPathCast(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLSelectParser#jsonPathCast.
-	exitJsonPathCast(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLSelectParser#dotIdentifier.
 	enterDotIdentifier(ctx) {
 	}

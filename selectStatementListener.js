@@ -4,7 +4,7 @@ class Listener extends SQLSelectParserListener {
     constructor() {
         super();
 
-        this.result = { selectItems: [], from: [] };
+        this.result = null;
 
         this.fieldReferences = [];
         this.expressionState = null;
@@ -18,7 +18,17 @@ class Listener extends SQLSelectParserListener {
         this.result = result;
     }
 
+    isAllSelected(selectItems) {
+        return selectItems?.[0]?.name === '*';
+    }
+
     exitQuerySpecification(ctx) {
+        const selectItems = ctx.selectItemList().fields || [];
+
+        if (this.result && this.isAllSelected(selectItems)) {
+            return;
+        }
+
         this.setResult({
             selectItems: ctx.selectItemList().fields || [],
             from: (ctx.fromClause() || {}).tableList || []

@@ -484,6 +484,7 @@ VERSION_COMMENT_START: ('/*!' DIGITS) (
 
 // inVersionComment is a variable in the base lexer.
 MYSQL_COMMENT_START: '/*!'                      -> channel(HIDDEN);
+SNOWFLAKE_COMMENT: '//' ~[\r\n]*                -> channel(HIDDEN);
 VERSION_COMMENT_END: '*/'  -> channel(HIDDEN);
 BLOCK_COMMENT:       ( '/**/' | '/*' ~[!] .*? '*/')                         -> channel(HIDDEN);
 
