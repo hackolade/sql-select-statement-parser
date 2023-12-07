@@ -486,7 +486,8 @@ simpleExpr:
     | CONVERT_SYMBOL OPEN_PAR_SYMBOL expr USING_SYMBOL charsetName CLOSE_PAR_SYMBOL                     
     | DEFAULT_SYMBOL OPEN_PAR_SYMBOL qualifiedIdentifier CLOSE_PAR_SYMBOL                               
     | VALUES_SYMBOL OPEN_PAR_SYMBOL qualifiedIdentifier CLOSE_PAR_SYMBOL                                
-    | INTERVAL_SYMBOL expr interval PLUS_OPERATOR expr                                       
+    | INTERVAL_SYMBOL expr interval PLUS_OPERATOR expr
+    | jsonPathIdentifier
 ;
 
 jsonOperator:
@@ -718,7 +719,7 @@ substringFunction:
 
 functionCall:
     pureIdentifier OPEN_PAR_SYMBOL udfExprList? CLOSE_PAR_SYMBOL // For both UDF + other functions.
-    | qualifiedIdentifier OPEN_PAR_SYMBOL (exprList? | jsonPathCast?) CLOSE_PAR_SYMBOL // Other functions only.
+    | qualifiedIdentifier OPEN_PAR_SYMBOL (exprList? | selectItem?) CLOSE_PAR_SYMBOL // Other functions only.
 ;
 
 udfExprList:
@@ -1016,10 +1017,6 @@ qualifiedIdentifier:
 
 jsonPathIdentifier:
     qualifiedIdentifier COLON_SYMBOL identifier  (((DOT_SYMBOL | COLON_SYMBOL) identifier) | BRACKET_QUOTED_TEXT)* (CAST_COLON_SYMBOL dataType)? (COLLATE_SYMBOL identifier?)?
-;
-
-jsonPathCast:
-    jsonPathIdentifier selectAlias?
 ;
 
 dotIdentifier:
