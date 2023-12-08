@@ -1,9 +1,10 @@
 const SQLSelectParserListener = require('./parser/SQLSelectParserListener');
 
 class Listener extends SQLSelectParserListener {
-    constructor() {
+    constructor(parser) {
         super();
 
+        this.parser = parser;
         this.result = null;
 
         this.fieldReferences = [];
@@ -22,17 +23,36 @@ class Listener extends SQLSelectParserListener {
         return selectItems?.[0]?.name === '*';
     }
 
+    findParentJoin(ctx) {
+        const ruleIndex = this.parser.ruleNames.findIndex(ruleName => ruleName === 'joinedTable');
+
+        return this.findParent(ctx, ruleIndex);
+    }
+
+    findParent(ctx, index) {
+        if (!ctx.parentCtx) {
+            return null;
+        }
+
+        if (ctx.parentCtx.ruleIndex === index) {
+            return ctx.parentCtx;
+        } else {
+            return this.findParent(ctx.parentCtx, index);
+        }
+    }
+
     exitQuerySpecification(ctx) {
         const selectItems = ctx.selectItemList().fields || [];
+        const joinCtx = this.findParentJoin(ctx);
 
-        if (this.result && this.isAllSelected(selectItems)) {
+        if (joinCtx || this.result && this.isAllSelected(selectItems)) {
             return;
         }
 
         this.setResult({
             selectItems: ctx.selectItemList().fields || [],
             from: (ctx.fromClause() || {}).tableList || []
-        })
+        });
     }
 
     exitSelectItemList(ctx) {
@@ -129,11 +149,11 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitTableReference(ctx) {
-        ctx.tables = (ctx.tableFactor() || ctx.escapedTableReference()).tables
+        ctx.tables = (ctx.tableFactor() || ctx.escapedTableReference()).tables;
 
         const joinedTables = ctx.joinedTable() || [];
 
-        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)]
+        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)];
     }
 
     exitJoinedTable(ctx) {
@@ -233,6 +253,6 @@ const getFieldReferences = fieldReferences => {
     if (fieldReferences?.length > 0) {
         return fieldReferences;
     }
-}
+};
 
 module.exports = Listener;
