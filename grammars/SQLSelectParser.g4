@@ -996,6 +996,7 @@ pureIdentifier:
     | DOUBLE_QUOTED_TEXT
     | BRACKET_QUOTED_TEXT
     | CURLY_BRACES_QUOTED_TEXT
+    | UNDERSCORE_CHARSET
 ;
 
 identifier:
