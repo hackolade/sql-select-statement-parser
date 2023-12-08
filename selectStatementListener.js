@@ -52,7 +52,7 @@ class Listener extends SQLSelectParserListener {
         this.setResult({
             selectItems: ctx.selectItemList().fields || [],
             from: (ctx.fromClause() || {}).tableList || []
-        })
+        });
     }
 
     exitSelectItemList(ctx) {
@@ -149,11 +149,11 @@ class Listener extends SQLSelectParserListener {
     }
 
     exitTableReference(ctx) {
-        ctx.tables = (ctx.tableFactor() || ctx.escapedTableReference()).tables
+        ctx.tables = (ctx.tableFactor() || ctx.escapedTableReference()).tables;
 
         const joinedTables = ctx.joinedTable() || [];
 
-        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)]
+        ctx.tables = [...ctx.tables, ...joinedTables.flatMap(tableReferenceContext => tableReferenceContext.tables)];
     }
 
     exitJoinedTable(ctx) {
@@ -253,6 +253,6 @@ const getFieldReferences = fieldReferences => {
     if (fieldReferences?.length > 0) {
         return fieldReferences;
     }
-}
+};
 
 module.exports = Listener;
