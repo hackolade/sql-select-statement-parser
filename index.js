@@ -25,7 +25,7 @@ const parseSelectStatement = (sql, logger) => {
     parser.addErrorListener(new ExprErrorListener());
     const tree = parser.query();
 
-    const listener = new selectStatementListener();
+    const listener = new selectStatementListener(parser);
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, tree);
 
     return listener.getResult();
