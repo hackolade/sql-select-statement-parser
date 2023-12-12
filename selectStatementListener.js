@@ -23,29 +23,32 @@ class Listener extends SQLSelectParserListener {
         return selectItems?.[0]?.name === '*';
     }
 
-    findParentJoin(ctx) {
-        const ruleIndex = this.parser.ruleNames.findIndex(ruleName => ruleName === 'joinedTable');
+    findParentContextsToSkip(ctx) {
+        const ruleIndexes = [
+            this.parser.ruleNames.findIndex(ruleName => ruleName === 'joinedTable'),
+            this.parser.ruleNames.findIndex(ruleName => ruleName === 'withClause')
+        ];
 
-        return this.findParent(ctx, ruleIndex);
+        return this.findParent(ctx, ruleIndexes);
     }
 
-    findParent(ctx, index) {
+    findParent(ctx, indexes) {
         if (!ctx.parentCtx) {
             return null;
         }
 
-        if (ctx.parentCtx.ruleIndex === index) {
+        if (indexes.includes(ctx.parentCtx.ruleIndex)) {
             return ctx.parentCtx;
         } else {
-            return this.findParent(ctx.parentCtx, index);
+            return this.findParent(ctx.parentCtx, indexes);
         }
     }
 
     exitQuerySpecification(ctx) {
         const selectItems = ctx.selectItemList().fields || [];
-        const joinCtx = this.findParentJoin(ctx);
+        const ctxToSkip = this.findParentContextsToSkip(ctx);
 
-        if (joinCtx || this.result && this.isAllSelected(selectItems)) {
+        if (ctxToSkip || this.result && this.isAllSelected(selectItems)) {
             return;
         }
 
