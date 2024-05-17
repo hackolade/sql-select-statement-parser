@@ -1,19 +1,16 @@
-module.exports = {
-	extends: ['prettier'],
-	env: {
-		'node': true,
-		'es2022': true,
+const globals = require('globals');
+const eslintConfigPrettier = require('eslint-config-prettier');
+
+const config = {
+	languageOptions: {
+		ecmaVersion: 2022,
+		sourceType: 'commonjs',
+		globals: {
+			...globals.node,
+			...globals.mocha,
+		},
 	},
-	ignores: [
-		'.git/*',
-		'.vscode/*',
-		'.idea/*',
-		'node_modules/*',
-		'reverse_engineering/node_modules/*',
-		'forward_engineering/node_modules/*',
-		'build/*',
-		'release/*',
-	],
+	ignores: ['.git/*', '.vscode/*', '.idea/*', 'node_modules/*', 'grammars/*', 'parser/*'],
 	rules: {
 		'no-cond-assign': 'error',
 		'no-const-assign': 'error',
@@ -36,3 +33,5 @@ module.exports = {
 		'no-console': 'error',
 	},
 };
+
+module.exports = [config, eslintConfigPrettier];
