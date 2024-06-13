@@ -6,7 +6,7 @@
   "author": "Hackolade",
   "license": "ISC",
   "dependencies": {
-    "antlr4": "^4.9.2"
+    "antlr4": "4.9.2"
   },
   "devDependencies": {
     "eslint": "9.2.0",
