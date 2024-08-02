@@ -823,8 +823,7 @@ orderList:
 ;
 
 nullsOrder:
-    NULLS_SYMBOL FIRST_SYMBOL
-    | NULLS_SYMBOL LAST_SYMBOL
+    NULLS_SYMBOL (FIRST_SYMBOL | LAST_SYMBOL)
 ;
 
 orderExpression:
