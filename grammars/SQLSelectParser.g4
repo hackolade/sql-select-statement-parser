@@ -188,7 +188,7 @@ olapOption:
 ;
 
 orderClause:
-    ORDER_SYMBOL BY_SYMBOL orderList
+    ORDER_SYMBOL BY_SYMBOL orderList nullsOrder? 
 ;
 
 direction:
@@ -820,6 +820,11 @@ simpleExprWithParentheses:
 
 orderList:
     orderExpression (COMMA_SYMBOL orderExpression)*
+;
+
+nullsOrder:
+    NULLS_SYMBOL FIRST_SYMBOL
+    | NULLS_SYMBOL LAST_SYMBOL
 ;
 
 orderExpression:
