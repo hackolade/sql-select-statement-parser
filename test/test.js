@@ -39,7 +39,7 @@ describe('Parsing of primitive SELECT statements', () => {
     it('should parse character varying type casting', () => {
         const result = parseSelectStatement('SELECT NULL::character varying AS "varying_test" FROM tbl;');
         assert.deepEqual(characterVarying, filterUndefinedProperties(result));
-    })
+    });
 });
 
 describe('Parsing of SELECT * statements', () => {
@@ -82,20 +82,22 @@ describe('Parsing of complex SELECT statements', () => {
         assert.deepEqual(simple, filterUndefinedProperties(result));
     });
     it('should parse statement with functions', () => {
-        const result = parseSelectStatement(`SELECT
-            array_agg(table.column1) AS alias1,
-            (to_char(column2, 'ID'::text))::integer AS alias2
-            from table`);
+        const result = parseSelectStatement(`SELECT array_agg(table.column1) AS alias1,
+													(to_char(column2, 'ID'::text)) ::integer AS alias2
+											 from table`);
         assert.deepEqual(functions, filterUndefinedProperties(result));
     });
     it('should parse function with DISTINCT', () => {
-        const result = parseSelectStatement(`SELECT array_agg(DISTINCT tbl.id) AS "test_agg_dist" FROM original_tbl;`);
+        const result = parseSelectStatement(`SELECT array_agg(DISTINCT tbl.id) AS "test_agg_dist"
+											 FROM original_tbl;`);
         assert.deepEqual(functionWithDistinct, filterUndefinedProperties(result));
-    })
+    });
     it('should parse DISTINCT ON', () => {
-        const result = parseSelectStatement(`SELECT DISTINCT ON (id) id, col FROM tbl;`);
+        const result = parseSelectStatement(`SELECT DISTINCT
+											 ON (id) id, col
+											 FROM tbl;`);
         assert.deepEqual(distinctOn, filterUndefinedProperties(result));
-    })
+    });
 });
 
 const filterUndefinedProperties = object => JSON.parse(JSON.stringify(object));

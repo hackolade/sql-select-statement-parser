@@ -5,11 +5,13 @@ Dialect-agnostic parser of SQL SELECT statements.
 Function parseSelectStatement accepts SQL SELECT statement of different SQL dialects (MySQL, Oracle, PostgreSQL, T-SQL, Snowflake, etc.) and returns object describing columns and tables names used in the query.
 
 ## Installation
+
 ```
 npm install @hackolade/sql-select-statement-parser
 ```
 
 ## Usage
+
 ```javascript
 const result = parseSelectStatement(`
     SELECT "database".'schema'.table.[column] AS columnAlias
@@ -18,6 +20,7 @@ const result = parseSelectStatement(`
 ```
 
 ## Result structure
+
 ```javascript
 {
     selectItems: [{                     // array of selected columns and expressions
@@ -30,7 +33,7 @@ const result = parseSelectStatement(`
         alias: "columnAlias",           // column alias
         fieldReferences: ["column"],    // List of column names used in expression.
                                         // Appears only when selected item is
-                                        // described by expression. 
+                                        // described by expression.
     }],
     from: [{                            // array of tables described in a FROM clause
         table: "table",                 // table name
@@ -44,4 +47,5 @@ const result = parseSelectStatement(`
 ```
 
 ## License
+
 [MIT](LICENSE)
