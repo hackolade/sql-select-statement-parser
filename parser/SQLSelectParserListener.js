@@ -357,6 +357,18 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	// Exit a parse tree produced by SQLSelectParser#derivedTable.
 	exitDerivedTable(ctx) {}
 
+	// Enter a parse tree produced by SQLSelectParser#flattenFunction.
+	enterFlattenFunction(ctx) {}
+
+	// Exit a parse tree produced by SQLSelectParser#flattenFunction.
+	exitFlattenFunction(ctx) {}
+
+	// Enter a parse tree produced by SQLSelectParser#flattenOption.
+	enterFlattenOption(ctx) {}
+
+	// Exit a parse tree produced by SQLSelectParser#flattenOption.
+	exitFlattenOption(ctx) {}
+
 	// Enter a parse tree produced by SQLSelectParser#tableReferenceListParens.
 	enterTableReferenceListParens(ctx) {}
 
@@ -1047,4 +1059,5 @@ class SQLSelectParserListener extends antlr4.tree.ParseTreeListener {
 	// Exit a parse tree produced by SQLSelectParser#identifierKeyword.
 	exitIdentifierKeyword(ctx) {}
 }
+
 module.exports = SQLSelectParserListener;

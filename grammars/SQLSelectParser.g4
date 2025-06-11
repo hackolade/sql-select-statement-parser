@@ -288,7 +288,7 @@ joinedTable:
 
 naturalJoinType:
     NATURAL_SYMBOL INNER_SYMBOL? JOIN_SYMBOL
-    | NATURAL_SYMBOL (LEFT_SYMBOL | RIGHT_SYMBOL) OUTER_SYMBOL? JOIN_SYMBOL
+    | NATURAL_SYMBOL (LEFT_SYMBOL | RIGHT_SYMBOL | FULL_SYMBOL) OUTER_SYMBOL? JOIN_SYMBOL
 ;
 
 innerJoinType:
@@ -297,7 +297,7 @@ innerJoinType:
 ;
 
 outerJoinType:
-    (LEFT_SYMBOL | RIGHT_SYMBOL) OUTER_SYMBOL? JOIN_SYMBOL
+    (LEFT_SYMBOL | RIGHT_SYMBOL | FULL_SYMBOL) OUTER_SYMBOL? JOIN_SYMBOL
 ;
 
 tableFactor:
@@ -318,7 +318,24 @@ singleTableParens:
 
 derivedTable:
     subquery tableAlias? (columnInternalRefList)?
-    | LATERAL_SYMBOL subquery tableAlias? columnInternalRefList?
+    | LATERAL_SYMBOL (
+		subquery tableAlias? columnInternalRefList?
+		| flattenFunction tableAlias?
+	)
+;
+
+flattenFunction:
+    FLATTEN_SYMBOL OPEN_PAR_SYMBOL
+        INPUT_SYMBOL EQUAL_OPERATOR GREATER_THAN_OPERATOR? expr
+        (COMMA_SYMBOL flattenOption)*
+    CLOSE_PAR_SYMBOL
+;
+
+flattenOption:
+    PATH_SYMBOL EQUAL_OPERATOR GREATER_THAN_OPERATOR? expr
+    | OUTER_SYMBOL EQUAL_OPERATOR (TRUE_SYMBOL | FALSE_SYMBOL)
+    | RECURSIVE_SYMBOL EQUAL_OPERATOR (TRUE_SYMBOL | FALSE_SYMBOL)
+    | MODE_SYMBOL EQUAL_OPERATOR textStringLiteral
 ;
 
 tableReferenceListParens:
@@ -1218,7 +1235,10 @@ identifierKeyword:
     RIGHT_SYMBOL |
     OUTER_SYMBOL |
     CROSS_SYMBOL |
+    FULL_SYMBOL |
     LATERAL_SYMBOL |
+    FLATTEN_SYMBOL |
+	INPUT_SYMBOL |
     JSON_TABLE_SYMBOL |
     COLUMNS_SYMBOL |
     ORDINALITY_SYMBOL |
